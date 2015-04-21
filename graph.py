@@ -92,3 +92,32 @@ def printPath(path):
         else:
             result = result + str(path[i]) + '->'
     return result
+
+
+def ex1():
+    nodes = []
+    nodes.append(Node("ABC"))  # nodes[0]
+    nodes.append(Node("ACB"))  # nodes[1]
+    nodes.append(Node("BAC"))  # nodes[2]
+    nodes.append(Node("BCA"))  # nodes[3]
+    nodes.append(Node("CAB"))  # nodes[4]
+    nodes.append(Node("CBA"))  # nodes[5]
+
+    g = Graph()
+    for n in nodes:
+        g.addNode(n)
+
+    # for n1 in nodes:
+    #     for n2 in nodes:
+    #         if n1 != n2 and any(iterable)
+    from itertools import combinations
+    for n1, n2 in combinations(nodes, 2):
+        if any([n1.getName()[i] == n2.getName()[i] for i in [0, -1]]):
+            g.addEdge(Edge(n1, n2))
+    print g
+    # print len(g.edges)
+
+
+
+if __name__ == '__main__':
+    ex1()
