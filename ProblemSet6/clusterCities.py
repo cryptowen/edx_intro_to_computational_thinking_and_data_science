@@ -1,7 +1,7 @@
 # Code shared across examples
 import pylab
 import string
-
+import random
 
 def stdDev(X):
     mean = sum(X) / float(len(X))
@@ -85,6 +85,23 @@ class Cluster(object):
         between 2 points, defined in Point."""
         # TO DO
         return sum([p1.distance(p2) for p1 in self.points for p2 in other.points])/len(self.points)/len(other.points)
+
+    def mysteryLinkageDist(self, other):
+        av_dist = self.averageLinkageDist(other)
+        max_dist = self.maxLinkageDist(other)
+        min_dist = self.singleLinkageDist(other)
+        retDist = 0.0
+        if av_dist == max_dist and max_dist == min_dist:
+            retDist = av_dist
+        elif av_dist == max_dist:
+            retDist = av_dist
+        elif av_dist == min_dist:
+            retDist = av_dist
+        elif max_dist == min_dist:
+            retDist = min_dist
+        else:
+            retDist = random.choice([av_dist,min_dist,max_dist])
+        return retDist
 
     def members(self):
         for p in self.points:
@@ -268,11 +285,15 @@ def test():
     # hCluster(points, Cluster.singleLinkageDist, 3, False)
     # hCluster(points, Cluster.maxLinkageDist, 3, False)
     # hCluster(points, Cluster.averageLinkageDist, 3, False)
-    points = buildCityPoints('cityTemps.txt', False)
-    hCluster(points, Cluster.singleLinkageDist, 5, False)
-    points = buildCityPoints('cityTemps.txt', True)
+    # points = buildCityPoints('cityTemps.txt', True)
     # hCluster(points, Cluster.maxLinkageDist, 10, False)
     # hCluster(points, Cluster.averageLinkageDist, 10, False)
-    hCluster(points, Cluster.singleLinkageDist, 5, False)
+    # hCluster(points, Cluster.singleLinkageDist, 5, False)
+
+    points = buildCityPoints('test.txt', False)
+    # hCluster(points, Cluster.singleLinkageDist, 4, False)
+    # hCluster(points, Cluster.maxLinkageDist, 4, False)
+    # hCluster(points, Cluster.averageLinkageDist, 4, False)
+    hCluster(points, Cluster.mysteryLinkageDist, 3, False)
 
 test()
